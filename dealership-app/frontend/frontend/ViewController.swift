@@ -8,10 +8,22 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    @IBOutlet weak var accountTypeButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+
+        let customer = UIAction(title: "Customer") { _ in
+            self.accountTypeButton.setTitle("Customer", for: .normal)
+        }
+
+        let dealer = UIAction(title: "Dealer") { _ in
+            self.accountTypeButton.setTitle("Dealer", for: .normal)
+        }
+
+        accountTypeButton.menu = UIMenu(title: "", children: [customer, dealer])
+        accountTypeButton.showsMenuAsPrimaryAction = true
     }
 
 
