@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "profileInfo.png",
+      "filename" : "firstCar.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "profileInfo@2x.png",
+      "filename" : "firstCar@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "profileInfo@3x.png",
+      "filename" : "firstCar@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
