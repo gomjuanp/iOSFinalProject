@@ -14,15 +14,15 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let customer = UIAction(title: "Customer") { _ in
-            self.accountTypeButton.setTitle("Customer", for: .normal)
+        let buyer = UIAction(title: "Buyer") { _ in
+            self.accountTypeButton.setTitle("Buyer", for: .normal)
         }
 
-        let dealer = UIAction(title: "Dealer") { _ in
-            self.accountTypeButton.setTitle("Dealer", for: .normal)
+        let seller = UIAction(title: "Seller") { _ in
+            self.accountTypeButton.setTitle("Seller", for: .normal)
         }
 
-        accountTypeButton.menu = UIMenu(title: "", children: [customer, dealer])
+        accountTypeButton.menu = UIMenu(title: "", children: [buyer, seller])
         accountTypeButton.showsMenuAsPrimaryAction = true
     }
 
