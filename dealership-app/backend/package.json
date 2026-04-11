@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "This backend powers the Dealership iOS application.\r It is responsible for handling business logic, database communication, authentication verification, and API endpoints used by the iOS frontend.",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js"
