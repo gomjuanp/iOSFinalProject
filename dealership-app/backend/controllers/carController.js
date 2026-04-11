@@ -61,10 +61,22 @@ const getCarById = async (req, res) => {
   }
 };
 
+const MUTABLE_CAR_FIELDS = ['title', 'brand', 'price'];
+
 const updateCar = async (req, res) => {
   try {
     const { id } = req.params;
-    const updates = req.body;
+    const updates = {};
+
+    MUTABLE_CAR_FIELDS.forEach((field) => {
+      if (req.body[field] !== undefined) {
+        updates[field] = field === 'price' ? Number(req.body[field]) : req.body[field];
+      }
+    });
+
+    if (Object.keys(updates).length === 0) {
+      return res.status(400).json({ error: 'No valid fields provided for update' });
+    }
 
     const carRef = db.collection('cars').doc(id);
     const carSnapshot = await carRef.get();
