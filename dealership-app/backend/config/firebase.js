@@ -1,10 +1,15 @@
+const path = require('path');
 const admin = require('firebase-admin');
-const serviceAccount = require('./dealership-app-f5cdc-firebase-adminsdk-fbsvc-93d856e2c2.json');
+
+const credentialsPath = process.env.GOOGLE_APPLICATION_CREDENTIALS;
+const firebaseCredential = credentialsPath
+	? admin.credential.cert(require(path.resolve(credentialsPath)))
+	: admin.credential.applicationDefault();
 
 // Prevent re-initialization during hot reloads in development.
 if (!admin.apps.length) {
 	admin.initializeApp({
-		credential: admin.credential.cert(serviceAccount),
+		credential: firebaseCredential,
 	});
 }
 
