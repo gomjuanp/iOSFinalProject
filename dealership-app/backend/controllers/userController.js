@@ -1,16 +1,18 @@
 const { admin, db } = require('../config/firebase');
 
+const DEFAULT_USER_ROLE = 'customer';
+
 const createUserProfile = async (req, res) => {
   try {
     const uid = req.user?.uid;
-    const { name, role } = req.body;
+    const { name } = req.body;
 
     if (!uid) {
       return res.status(401).json({ error: 'Unauthorized user' });
     }
 
-    if (!name || !role) {
-      return res.status(400).json({ error: 'name and role are required' });
+    if (!name) {
+      return res.status(400).json({ error: 'name is required' });
     }
 
     const userRecord = await admin.auth().getUser(uid);
@@ -19,7 +21,7 @@ const createUserProfile = async (req, res) => {
       uid,
       name,
       email: userRecord.email || null,
-      role,
+      role: DEFAULT_USER_ROLE,
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
     };
 
