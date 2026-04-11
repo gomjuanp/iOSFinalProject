@@ -9,10 +9,15 @@ const createCar = async (req, res) => {
       return res.status(400).json({ error: 'title, brand, and price are required' });
     }
 
+    const numericPrice = Number(price);
+    if (!Number.isFinite(numericPrice) || numericPrice < 0) {
+      return res.status(400).json({ error: 'price must be a finite non-negative number' });
+    }
+
     const newCar = {
       title,
       brand,
-      price: Number(price),
+      price: numericPrice,
       dealerId,
       isSold: false,
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
