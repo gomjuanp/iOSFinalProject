@@ -86,6 +86,7 @@ Each developer must:
 4. Go to Service Accounts
 5. Click "Generate New Private Key"
 6. Download the JSON file
+7. Rename the downloaded file to `serviceAccountKey.json`
 
 Place it inside:
 
@@ -96,7 +97,7 @@ Place it inside:
 Final location must be:
 
 ```bash
-backend/config/.json
+backend/config/serviceAccountKey.json
 ```
 
 ---
