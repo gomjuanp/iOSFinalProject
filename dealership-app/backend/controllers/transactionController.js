@@ -47,6 +47,9 @@ const purchaseCar = async (req, res) => {
     });
 
     const savedTx = await db.collection('transactions').doc(result.transactionId).get();
+    if (!savedTx.exists) {
+      return res.status(500).json({ error: 'Failed to retrieve purchase record' });
+    }
     return res.status(200).json({ message: 'Car purchased successfully', data: { transactionId: result.transactionId, ...savedTx.data() } });
   } catch (error) {
     console.error('purchaseCar error:', error.message);

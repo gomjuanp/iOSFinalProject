@@ -35,6 +35,9 @@ const createCar = async (req, res) => {
     const docRef = await db.collection('cars').add(newCar);
 
     const savedDoc = await docRef.get();
+    if (!savedDoc.exists) {
+      return res.status(500).json({ error: 'Failed to create car' });
+    }
     return res.status(201).json({ message: 'Car created', id: docRef.id, data: { id: docRef.id, ...savedDoc.data() } });
   } catch (error) {
     console.error('createCar error:', error.message);
