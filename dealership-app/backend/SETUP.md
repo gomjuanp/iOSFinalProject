@@ -1,9 +1,3 @@
-# 📄 1️⃣ `SETUP.md` (Put This Inside `/backend/SETUP.md`)
-
-You can copy everything below exactly as-is.
-
----
-
 # Backend Setup Guide – Dealership App
 
 This document explains exactly how to set up and run the backend locally after cloning the repository.
@@ -80,7 +74,7 @@ The Firebase service key is NOT included in the repository for security reasons.
 
 Each developer must:
 
-1. Go to Firebase Console (I sent you an email invitation for that)
+1. Go to Firebase Console
 2. Open the project
 3. Click Project Settings (gear icon)
 4. Go to Service Accounts
@@ -114,6 +108,7 @@ Add:
 
 ```bash
 PORT=5000
+GOOGLE_APPLICATION_CREDENTIALS=./config/serviceAccountKey.json
 ```
 
 Save the file.
@@ -140,114 +135,112 @@ Open browser:
 http://localhost:5000
 ```
 
-If you see a response, the server is running correctly.
+If you see a JSON response, the server is running correctly.
 
 ---
 
 # 7. Testing With Postman
 
-All protected routes require a Firebase ID token.
-
----
-
-## 7.1 Create A Test User
-
-Go to Firebase Console:
-
-* Authentication
-* Users
-* Add user
-* Use email/password
-
-Example:
-
-Email: [dealer@test.com](mailto:dealer@test.com)
-Password: 123456
-
----
-
-## 7.2 Get Firebase ID Token
-
-To get token:
-
-Option 1 (Recommended):
-Use frontend later.
-
-Option 2 (Temporary Testing):
-Use a small script or ask backend owner to generate token.
-
-Token must be included in Postman header:
+All protected routes require a Firebase ID token in the header:
 
 ```
-Authorization: Bearer YOUR_TOKEN_HERE
-```
-
----
-
-## 7.3 Test Endpoints
-
-### Get All Cars
-
-Method: GET
-URL:
-
-```
-http://localhost:5000/api/cars
-```
-
-No token required.
-
----
-
-### Create Car (Dealer Only)
-
-Method: POST
-URL:
-
-```
-http://localhost:5000/api/cars
-```
-
-Headers:
-
-```
-Authorization: Bearer YOUR_TOKEN
+Authorization: Bearer <YOUR_ID_TOKEN>
 Content-Type: application/json
 ```
 
-Body (raw JSON):
+---
 
+## 7.1 Create A Test User In Firebase Console
+
+* Authentication → Users → Add user → Email/Password
+
+Example:
+- Email: `buyer@test.com` / Password: `Test1234`
+- Email: `seller@test.com` / Password: `Test1234`
+
+---
+
+## 7.2 Create User Profile
+
+After creating the Firebase Auth account and obtaining an ID token, call:
+
+**POST** `http://localhost:5000/api/users/profile`
+
+Body:
 ```json
 {
-  "title": "BMW M3",
-  "brand": "BMW",
-  "price": 50000
+  "username": "john_buyer",
+  "role": "buyer"
+}
+```
+
+For a seller:
+```json
+{
+  "username": "jane_seller",
+  "role": "seller"
 }
 ```
 
 ---
 
-### Purchase Car
+## 7.3 Get All Cars (no token needed)
 
-Method: POST
-URL:
+**GET** `http://localhost:5000/api/cars`
 
-```
-http://localhost:5000/api/purchase
-```
+---
 
-Headers:
+## 7.4 Create Car Listing (seller token required)
 
-```
-Authorization: Bearer YOUR_TOKEN
-Content-Type: application/json
-```
+**POST** `http://localhost:5000/api/cars`
 
 Body:
-
 ```json
 {
-  "carId": "CAR_DOCUMENT_ID"
+  "title": "2022 BMW M3",
+  "brand": "BMW",
+  "year": "2022",
+  "price": 75000,
+  "description": "Low mileage, excellent condition.",
+  "imageUrl": "https://example.com/bmw.jpg"
+}
+```
+
+---
+
+## 7.5 Get Seller's Own Listings (seller token required)
+
+**GET** `http://localhost:5000/api/cars/my-listings`
+
+---
+
+## 7.6 Purchase A Car (any authenticated user)
+
+**POST** `http://localhost:5000/api/transactions/purchase`
+
+Body:
+```json
+{
+  "carId": "<Firestore car document ID>"
+}
+```
+
+---
+
+## 7.7 Get Purchase History (any authenticated user)
+
+**GET** `http://localhost:5000/api/transactions/my-purchases`
+
+---
+
+## 7.8 Update Profile (any authenticated user)
+
+**PUT** `http://localhost:5000/api/users/me`
+
+Body (only `username` and/or `email` can be updated — role cannot be changed):
+```json
+{
+  "username": "new_username"
 }
 ```
 

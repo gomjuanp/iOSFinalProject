@@ -1,4 +1,4 @@
-const roleMiddleware = (allowedRoles = ['dealer_individual', 'dealer_company']) => {
+const roleMiddleware = (allowedRoles = ['seller']) => {
   return (req, res, next) => {
     const userRole = req.user?.role;
 

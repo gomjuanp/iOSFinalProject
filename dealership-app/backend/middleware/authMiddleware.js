@@ -1,4 +1,4 @@
-const { admin } = require('../config/firebase');
+const { admin, db } = require('../config/firebase');
 
 const authMiddleware = async (req, res, next) => {
   try {
@@ -16,6 +16,12 @@ const authMiddleware = async (req, res, next) => {
 
     const decodedToken = await admin.auth().verifyIdToken(idToken);
     req.user = decodedToken;
+
+    // Enrich req.user with the role stored in Firestore so roleMiddleware works correctly.
+    const userDoc = await db.collection('users').doc(decodedToken.uid).get();
+    if (userDoc.exists) {
+      req.user.role = userDoc.data().role;
+    }
 
     next();
   } catch (error) {
