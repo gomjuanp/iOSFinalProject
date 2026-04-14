@@ -34,7 +34,8 @@ const createCar = async (req, res) => {
 
     const docRef = await db.collection('cars').add(newCar);
 
-    return res.status(201).json({ message: 'Car created', id: docRef.id, data: { id: docRef.id, ...newCar } });
+    const savedDoc = await docRef.get();
+    return res.status(201).json({ message: 'Car created', id: docRef.id, data: { id: docRef.id, ...savedDoc.data() } });
   } catch (error) {
     console.error('createCar error:', error.message);
     return res.status(500).json({ error: 'Failed to create car' });

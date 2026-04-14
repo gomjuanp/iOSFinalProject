@@ -82,7 +82,7 @@ Authorization: Bearer <Firebase ID Token>
 |--------|------|------|-------------|
 | `POST` | `/api/users/profile` | ✅ | Create user profile (set username + role) |
 | `GET` | `/api/users/me` | ✅ | Get the authenticated user's profile |
-| `PUT` | `/api/users/me` | ✅ | Update username or email (role cannot be changed) |
+| `PUT` | `/api/users/me` | ✅ | Update username only (role cannot be changed) |
 
 #### POST `/api/users/profile` body
 ```json

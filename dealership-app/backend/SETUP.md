@@ -237,7 +237,7 @@ Body:
 
 **PUT** `http://localhost:5000/api/users/me`
 
-Body (only `username` and/or `email` can be updated — role cannot be changed):
+Body (only `username` can be updated — role cannot be changed):
 ```json
 {
   "username": "new_username"

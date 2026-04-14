@@ -43,10 +43,11 @@ const purchaseCar = async (req, res) => {
 
       transaction.set(transactionRef, transactionData);
 
-      return { transactionId: transactionRef.id, transactionData };
+      return { transactionId: transactionRef.id };
     });
 
-    return res.status(200).json({ message: 'Car purchased successfully', data: result });
+    const savedTx = await db.collection('transactions').doc(result.transactionId).get();
+    return res.status(200).json({ message: 'Car purchased successfully', data: { transactionId: result.transactionId, ...savedTx.data() } });
   } catch (error) {
     console.error('purchaseCar error:', error.message);
     if (error.message === 'CAR_NOT_FOUND') {

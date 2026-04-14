@@ -37,7 +37,8 @@ const createUserProfile = async (req, res) => {
 
     await db.collection('users').doc(uid).set(userDoc);
 
-    return res.status(201).json({ message: 'User profile created', data: userDoc });
+    const savedDoc = await db.collection('users').doc(uid).get();
+    return res.status(201).json({ message: 'User profile created', data: savedDoc.data() });
   } catch (error) {
     console.error('createUserProfile error:', error.message);
     return res.status(500).json({ error: 'Failed to create user profile' });
