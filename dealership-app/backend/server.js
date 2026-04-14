@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const rateLimit = require('express-rate-limit');
 const userRoutes = require('./routes/userRoutes');
 const carRoutes = require('./routes/carRoutes');
 const transactionRoutes = require('./routes/transactionRoutes');
@@ -35,9 +36,19 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
+// Apply a general rate limit to all API routes to protect against brute-force and abuse.
+const apiLimiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	max: 100,
+	standardHeaders: true,
+	legacyHeaders: false,
+	message: { error: 'Too many requests, please try again later.' },
+});
+app.use('/api', apiLimiter);
+
 app.use('/api/users', userRoutes);
 app.use('/api/cars', carRoutes);
-app.use('/api', transactionRoutes);
+app.use('/api/transactions', transactionRoutes);
 
 app.get('/', (req, res) => {
 	res.json({
