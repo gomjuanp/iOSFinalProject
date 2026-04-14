@@ -295,9 +295,28 @@ class APIService {
 
     static let shared = APIService()
 
-    // IMPORTANT: Change this to your backend URL.
-    // For local development with simulator, use localhost.
-    // For a physical device on the same network, use the Mac's IP address.
+    // For local development with the iOS simulator, localhost works:
+    // private let baseURL = "http://localhost:5000/api"
+    //
+    // App Transport Security (ATS) blocks plain HTTP by default on iOS.
+    // If you use the HTTP localhost URL above for development, add a
+    // localhost-only exception to Info.plist:
+    //
+    // <key>NSAppTransportSecurity</key>
+    // <dict>
+    //     <key>NSExceptionDomains</key>
+    //     <dict>
+    //         <key>localhost</key>
+    //         <dict>
+    //             <key>NSExceptionAllowsInsecureHTTPLoads</key>
+    //             <true/>
+    //         </dict>
+    //     </dict>
+    // </dict>
+    //
+    // For a physical device on the same network, use your Mac's IP address
+    // instead of localhost, and if you still use HTTP for development, add a
+    // matching ATS exception for that host as well. Prefer HTTPS in production.
     private let baseURL = "http://localhost:5000/api"
 
     private init() {}
@@ -333,7 +352,12 @@ class APIService {
             }
 
             if let body = body {
-                request.httpBody = try? JSONSerialization.data(withJSONObject: body)
+                do {
+                    request.httpBody = try JSONSerialization.data(withJSONObject: body)
+                } catch {
+                    completion(.failure(error))
+                    return
+                }
             }
 
             URLSession.shared.dataTask(with: request) { data, response, error in
@@ -590,6 +614,8 @@ Only `username` can be updated. Role cannot be changed.
 |------|------|------|
 | 400 | `{ "error": "Role cannot be changed after account creation" }` | Tried to change role |
 | 400 | `{ "error": "No valid fields provided for update" }` | Empty or invalid body |
+| 401 | `{ "error": "Unauthorized: Missing Bearer token" }` | `Authorization` header missing or malformed |
+| 401 | `{ "error": "Unauthorized: Token verification failed" }` | Firebase ID token is invalid or expired |
 | 404 | `{ "error": "User profile not found" }` | No profile exists |
 
 ---
@@ -750,7 +776,7 @@ Public endpoint.
 | Code | Body | When |
 |------|------|------|
 | 400 | `{ "error": "title, brand, year, price, and description are required" }` | Missing fields |
-| 400 | `{ "error": "year must be a valid 4-digit year between 1900 and 2027" }` | Invalid year |
+| 400 | `{ "error": "year must be a valid 4-digit year between 1900 and next year" }` | Invalid year |
 | 400 | `{ "error": "price must be a finite non-negative number" }` | Invalid price |
 | 403 | `{ "error": "Forbidden: Insufficient role permissions" }` | Not a seller |
 
@@ -1072,5 +1098,5 @@ Use this checklist to track progress on the frontend implementation:
 - [ ] Handle loading states (show spinner during API calls)
 - [ ] Handle error states (show alerts for API errors)
 - [ ] Handle empty states (no cars, no purchases)
-- [ ] Filter out sold cars on the browse screen (`isSold == true`)
+- [ ] Filter out sold cars on the browse screen (`isSold == false`)
 - [ ] Test with both buyer and seller accounts

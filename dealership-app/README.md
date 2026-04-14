@@ -7,24 +7,25 @@ A car dealership iOS application with a Node.js/Express backend and Firebase Fir
 ## Project Structure
 
 ```
-dealership-app/
-├── backend/                    # Node.js/Express REST API
-│   ├── config/                 # Firebase configuration
-│   ├── controllers/            # Business logic (users, cars, transactions)
-│   ├── middleware/              # Auth + role middleware
-│   ├── routes/                 # Express route definitions
-│   ├── server.js               # Application entry point
-│   ├── README.md               # Backend documentation
-│   └── SETUP.md                # Backend setup instructions
+repository-root/
+├── dealership-app/
+│   ├── backend/                    # Node.js/Express REST API
+│   │   ├── config/                 # Firebase configuration
+│   │   ├── controllers/            # Business logic (users, cars, transactions)
+│   │   ├── middleware/             # Auth + role middleware
+│   │   ├── routes/                 # Express route definitions
+│   │   ├── server.js               # Application entry point
+│   │   ├── README.md               # Backend documentation
+│   │   └── SETUP.md                # Backend setup instructions
+│   │
+│   └── frontend/                   # iOS app (Swift/UIKit/Storyboard)
+│       ├── frontend/               # Xcode source files
+│       ├── frontend.xcodeproj/     # Xcode project
+│       ├── README.md               # Frontend documentation
+│       └── INTEGRATION_GUIDE.md    # How to connect frontend to backend API
 │
-├── frontend/                   # iOS app (Swift/UIKit/Storyboard)
-│   ├── frontend/               # Xcode source files
-│   ├── frontend.xcodeproj/     # Xcode project
-│   ├── README.md               # Frontend documentation
-│   └── INTEGRATION_GUIDE.md    # How to connect frontend to backend API
-│
-├── firebase.json               # Firebase project config
-└── firestore.indexes.json      # Firestore composite indexes
+├── firebase.json                   # Firebase project config
+└── firestore.indexes.json          # Firestore composite indexes
 ```
 
 ---
