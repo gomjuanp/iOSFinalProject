@@ -91,11 +91,26 @@ const updateCar = async (req, res) => {
     const { id } = req.params;
     const updates = {};
 
-    MUTABLE_CAR_FIELDS.forEach((field) => {
-      if (req.body[field] !== undefined) {
-        updates[field] = field === 'price' ? Number(req.body[field]) : req.body[field];
+    for (const field of MUTABLE_CAR_FIELDS) {
+      if (req.body[field] === undefined) continue;
+
+      if (field === 'year') {
+        const numericYear = Number(req.body.year);
+        const currentYear = new Date().getFullYear();
+        if (!Number.isInteger(numericYear) || numericYear < 1900 || numericYear > currentYear + 1) {
+          return res.status(400).json({ error: `year must be a valid 4-digit year between 1900 and ${currentYear + 1}` });
+        }
+        updates.year = String(numericYear);
+      } else if (field === 'price') {
+        const numericPrice = Number(req.body.price);
+        if (!Number.isFinite(numericPrice) || numericPrice < 0) {
+          return res.status(400).json({ error: 'price must be a finite non-negative number' });
+        }
+        updates.price = numericPrice;
+      } else {
+        updates[field] = req.body[field];
       }
-    });
+    }
 
     if (Object.keys(updates).length === 0) {
       return res.status(400).json({ error: 'No valid fields provided for update' });

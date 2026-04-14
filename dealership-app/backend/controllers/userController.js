@@ -65,7 +65,7 @@ const getUserProfile = async (req, res) => {
   }
 };
 
-const MUTABLE_USER_FIELDS = ['username', 'email'];
+const MUTABLE_USER_FIELDS = ['username'];
 
 const updateUserProfile = async (req, res) => {
   try {
