@@ -1,523 +1,259 @@
-We are using:
+# Backend Setup Guide – Dealership App
 
-* Node.js
-* Express
-* Firebase Firestore
-* Firebase Authentication (Option A)
-* VS Code
-* Single repo with `/backend`
+This document explains exactly how to set up and run the backend locally after cloning the repository.
+
+Follow every step carefully.
 
 ---
 
-# ✅ Install Everything You Need
+# 1. Requirements
 
----
+Before starting, make sure you install:
 
-## Install Node.js
+## 1.1 Install Node.js
 
-1. Go to: [https://nodejs.org](https://nodejs.org)
-2. Download **LTS version**
-3. Install with default settings
+Go to:
 
-After installation, open terminal and run:
+[https://nodejs.org](https://nodejs.org)
+
+Download the **LTS version**.
+
+After installation, open a terminal and verify:
 
 ```bash
 node -v
 npm -v
 ```
 
-If both show versions → success.
+Both commands must return a version number.
 
 ---
 
-## Install Postman
-
-For API testing:
+## 1.2 Install Postman (For API Testing)
 
 [https://www.postman.com/downloads/](https://www.postman.com/downloads/)
 
-Install it.
-
 ---
 
-# ✅ PHASE 2 — Create Backend Project
+# 2. Clone The Repository
 
----
-
-## STEP 4 — Create Folder Structure
-
-Inside your repo:
+Open terminal and run:
 
 ```bash
-mkdir dealership-app
-cd dealership-app
-mkdir backend
-mkdir frontend
+git clone <repository-url>
+cd dealership-app/backend
 ```
 
-Now go inside backend:
+Make sure you are inside the `backend` folder.
+
+---
+
+# 3. Install Project Dependencies
+
+Inside the backend folder, run:
 
 ```bash
-cd backend
+npm install
 ```
 
----
-
-## STEP 5 — Initialize Node Project
-
-Run:
-
-```bash
-npm init -y
-```
-
-This creates `package.json`.
-
----
-
-## STEP 6 — Install Required Dependencies
-
-Run:
-
-```bash
-npm install express cors dotenv firebase-admin
-```
-
-Install development dependency:
-
-```bash
-npm install nodemon --save-dev
-```
-
----
-
-## STEP 7 — Configure package.json Scripts
-
-Open `package.json`.
-
-Find `"scripts"` and change to:
-
-```json
-"scripts": {
-  "start": "node server.js",
-  "dev": "nodemon server.js"
-}
-```
-
----
-
-# ✅ PHASE 3 — Setup Firebase
-
----
-
-## STEP 8 — Create Firebase Project
-
-1. Go to [https://console.firebase.google.com](https://console.firebase.google.com)
-2. Click **Create Project**
-3. Name it: `dealership-app`
-4. Disable Google Analytics (optional)
-5. Create project
-
----
-
-## STEP 9 — Enable Firestore
-
-Inside Firebase:
-
-* Click **Firestore Database**
-* Click **Create Database**
-* Start in **Test Mode**
-* Choose region
-
----
-
-## STEP 10 — Enable Authentication
-
-Inside Firebase:
-
-* Click **Authentication**
-* Click **Get Started**
-* Go to **Sign-in Method**
-* Enable **Email/Password**
-
----
-
-## STEP 11 — Generate Admin SDK Key
-
-Inside Firebase:
-
-* Project Settings (gear icon)
-* Service Accounts
-* Click **Generate New Private Key**
-* Download JSON file
-
-Move this file into:
-
-```
-backend/config/firebaseServiceKey.json
-```
-
----
-
-# ✅ PHASE 4 — Create Backend Structure
-
-Inside `/backend`, create:
-
-```
-/config
-/controllers
-/routes
-/middleware
-/services
-```
-
-Create files:
-
-```
-server.js
-.env
-```
-
----
-
-# ✅ PHASE 5 — Configure Firebase Admin
-
-Create file:
-
-```
-/config/firebase.js
-```
-
-Inside it:
-
-* Import firebase-admin
-* Import service key JSON
-* Initialize admin SDK
-* Export admin and Firestore instance
-
-This file connects your backend to Firebase.
-
----
-
-# ✅ PHASE 6 — Build Express Server
-
-Open `server.js`.
-
-Initialize:
+This installs:
 
 * express
 * cors
 * dotenv
-* JSON middleware
+* firebase-admin
+* nodemon
 
-Connect route files.
+You should now see a `node_modules` folder created automatically.
 
-Set port:
+---
 
+# 4. Setup Firebase Admin Key (IMPORTANT)
+
+The Firebase service key is NOT included in the repository for security reasons.
+
+Each developer must:
+
+1. Go to Firebase Console
+2. Open the project
+3. Click Project Settings (gear icon)
+4. Go to Service Accounts
+5. Click "Generate New Private Key"
+6. Download the JSON file
+7. Rename the downloaded file to `serviceAccountKey.json`
+
+Place it inside:
+
+```bash
+/backend/config/
 ```
-const PORT = process.env.PORT || 5000;
+
+Final location must be:
+
+```bash
+backend/config/serviceAccountKey.json
 ```
 
-Start server:
+---
+
+# 5. Create Environment File
+
+Inside `/backend`, create a file named:
+
+```bash
+.env
+```
+
+Add:
+
+```bash
+PORT=5000
+GOOGLE_APPLICATION_CREDENTIALS=./config/serviceAccountKey.json
+```
+
+Save the file.
+
+---
+
+# 6. Start The Backend Server
+
+Inside `/backend`, run:
 
 ```bash
 npm run dev
 ```
 
-Visit:
+You should see:
+
+```bash
+Server running on port 5000
+```
+
+Open browser:
 
 ```
 http://localhost:5000
 ```
 
-You should see a test message.
+If you see a JSON response, the server is running correctly.
 
 ---
 
-# ✅ PHASE 7 — Authentication Middleware (CRITICAL)
+# 7. Testing With Postman
 
-Create:
+All protected routes require a Firebase ID token in the header:
 
 ```
-/middleware/authMiddleware.js
-```
-
-This middleware must:
-
-1. Read `Authorization` header
-2. Extract Bearer token
-3. Verify token using `admin.auth().verifyIdToken()`
-4. Attach decoded user to `req.user`
-5. Call `next()`
-
-If token invalid → return 401 Unauthorized.
-
-This protects routes.
-
----
-
-# ✅ PHASE 8 — Role Middleware
-
-Create:
-
-```
-/middleware/roleMiddleware.js
-```
-
-Function:
-
-* Check `req.user.role`
-* Allow only:
-
-  * dealer_individual
-  * dealer_company
-
-Used for:
-
-* Creating cars
-* Editing cars
-* Deleting cars
-
----
-
-# ✅ PHASE 9 — Build Controllers
-
----
-
-## User Controller
-
-File:
-
-```
-/controllers/userController.js
-```
-
-Functions:
-
-* createUserProfile
-* getUserProfile
-
-When user registers via Firebase Auth:
-
-* iOS sends token
-* Backend verifies
-* Backend creates Firestore document in `users` collection
-
----
-
-## Car Controller
-
-File:
-
-```
-/controllers/carController.js
-```
-
-Functions:
-
-* createCar
-* getAllCars
-* getCarById
-* updateCar
-* deleteCar
-
-Rules:
-
-* Only dealers can create/update/delete
-* Customers can only view
-
----
-
-## Transaction Controller
-
-File:
-
-```
-/controllers/transactionController.js
-```
-
-Function:
-
-* purchaseCar
-
-Logic:
-
-1. Verify car exists
-2. Check `isSold == false`
-3. Update car → `isSold = true`
-4. Create transaction record
-5. Return success JSON
-
----
-
-# ✅ PHASE 10 — Create Routes
-
----
-
-## userRoutes.js
-
-Routes:
-
-* POST /api/users/profile
-* GET /api/users/me
-
-Protected with authMiddleware.
-
----
-
-## carRoutes.js
-
-Routes:
-
-* GET /api/cars
-* GET /api/cars/:id
-* POST /api/cars
-* PUT /api/cars/:id
-* DELETE /api/cars/:id
-
-Protect POST/PUT/DELETE with:
-
-* authMiddleware
-* roleMiddleware
-
----
-
-## transactionRoutes.js
-
-Route:
-
-* POST /api/purchase
-
-Protected with:
-
-* authMiddleware
-
----
-
-Then import all routes into `server.js`.
-
----
-
-# ✅ PHASE 11 — Firestore Collections
-
-In Firebase Console create:
-
----
-
-### users
-
-Fields:
-
-* uid (string)
-* name (string)
-* email (string)
-* role (string)
-* createdAt (timestamp)
-
----
-
-### cars
-
-Fields:
-
-* title
-* brand
-* price
-* dealerId
-* isSold (boolean)
-* createdAt
-
----
-
-### transactions
-
-Fields:
-
-* carId
-* buyerId
-* amount
-* status
-* createdAt
-
----
-
-# ✅ PHASE 12 — Testing With Postman
-
----
-
-## 1️⃣ Register User
-
-Use Firebase console or frontend to create user.
-
----
-
-## 2️⃣ Get ID Token
-
-From frontend:
-Call:
-
-```
-firebase.auth().currentUser.getIdToken()
-```
-
-Copy token.
-
----
-
-## 3️⃣ Test Protected Route
-
-In Postman:
-
-Add header:
-
-```
-Authorization: Bearer YOUR_TOKEN
-```
-
-Test:
-
-* Create car
-* Get cars
-* Purchase car
-
----
-
-# ✅ PHASE 13 — Final Folder Structure
-
-Your backend must now look like:
-
-```
-backend/
-  config/
-    firebase.js
-    firebaseServiceKey.json
-  controllers/
-    userController.js
-    carController.js
-    transactionController.js
-  middleware/
-    authMiddleware.js
-    roleMiddleware.js
-  routes/
-    userRoutes.js
-    carRoutes.js
-    transactionRoutes.js
-  services/
-  server.js
-  package.json
-  .env
+Authorization: Bearer <YOUR_ID_TOKEN>
+Content-Type: application/json
 ```
 
 ---
 
-# ✅ PHASE 14 — Optional Improvements
+## 7.1 Create A Test User In Firebase Console
 
-After full functionality works:
+* Authentication → Users → Add user → Email/Password
 
-* Add error handling middleware
-* Add input validation
-* Add pagination for cars
-* Add filtering
-* Add logging
+Example:
+- Email: `buyer@test.com` / Password: `Test1234`
+- Email: `seller@test.com` / Password: `Test1234`
 
 ---
+
+## 7.2 Create User Profile
+
+After creating the Firebase Auth account and obtaining an ID token, call:
+
+**POST** `http://localhost:5000/api/users/profile`
+
+Body:
+```json
+{
+  "username": "john_buyer",
+  "role": "buyer"
+}
+```
+
+For a seller:
+```json
+{
+  "username": "jane_seller",
+  "role": "seller"
+}
+```
+
+---
+
+## 7.3 Get All Cars (no token needed)
+
+**GET** `http://localhost:5000/api/cars`
+
+---
+
+## 7.4 Create Car Listing (seller token required)
+
+**POST** `http://localhost:5000/api/cars`
+
+Body:
+```json
+{
+  "title": "2022 BMW M3",
+  "brand": "BMW",
+  "year": "2022",
+  "price": 75000,
+  "description": "Low mileage, excellent condition.",
+  "imageUrl": "https://example.com/bmw.jpg"
+}
+```
+
+---
+
+## 7.5 Get Seller's Own Listings (seller token required)
+
+**GET** `http://localhost:5000/api/cars/my-listings`
+
+---
+
+## 7.6 Purchase A Car (any authenticated user)
+
+**POST** `http://localhost:5000/api/transactions/purchase`
+
+Body:
+```json
+{
+  "carId": "<Firestore car document ID>"
+}
+```
+
+---
+
+## 7.7 Get Purchase History (any authenticated user)
+
+**GET** `http://localhost:5000/api/transactions/my-purchases`
+
+---
+
+## 7.8 Update Profile (any authenticated user)
+
+**PUT** `http://localhost:5000/api/users/me`
+
+Body (only `username` can be updated — role cannot be changed):
+```json
+{
+  "username": "new_username"
+}
+```
+
+---
+
+# 8. Stopping The Server
+
+Press:
+
+```
+CTRL + C
+```
+
+---
+
+Backend is now fully running locally.
