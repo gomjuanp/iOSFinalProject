@@ -22,23 +22,40 @@ final class CarImageLoader {
             return
         }
 
-        guard let url = URL(string: value),
-              let scheme = url.scheme?.lowercased(),
-              scheme == "http" || scheme == "https" else {
-            completion(nil)
-            return
+        // Try URL first (http/https/file)
+        if let url = URL(string: value), let scheme = url.scheme?.lowercased() {
+            if scheme == "http" || scheme == "https" {
+                URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
+                    var image: UIImage?
+                    if let data, let remoteImage = UIImage(data: data) {
+                        image = remoteImage
+                        self?.cache.setObject(remoteImage, forKey: value as NSString)
+                    }
+                    DispatchQueue.main.async { completion(image) }
+                }.resume()
+                return
+            } else if scheme == "file" {
+                if let data = try? Data(contentsOf: url), let img = UIImage(data: data) {
+                    self.cache.setObject(img, forKey: value as NSString)
+                    completion(img)
+                    return
+                }
+            }
         }
 
-        URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
-            var image: UIImage?
-            if let data, let remoteImage = UIImage(data: data) {
-                image = remoteImage
-                self?.cache.setObject(remoteImage, forKey: value as NSString)
+        // Fallback: treat as a local filename in Documents directory
+        if let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+            let fileURL = docs.appendingPathComponent(value)
+            if let data = try? Data(contentsOf: fileURL), let img = UIImage(data: data) {
+                self.cache.setObject(img, forKey: value as NSString)
+                completion(img)
+                return
             }
-            DispatchQueue.main.async {
-                completion(image)
-            }
-        }.resume()
+        }
+
+        // If all else fails
+        completion(nil)
+        return
     }
 }
 

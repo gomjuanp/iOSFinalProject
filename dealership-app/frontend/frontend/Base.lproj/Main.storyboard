@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="kOV-U7-SDA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="kOV-U7-SDA">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -72,7 +72,7 @@
             <objects>
                 <viewController id="wyW-mb-t4E" customClass="ViewController" customModule="frontend" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1TO-r6-0NI">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="793"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CreateAcc" translatesAutoresizingMaskIntoConstraints="NO" id="zi3-yy-GpQ">
@@ -164,7 +164,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nE4-Mb-hdX">
-                                <rect key="frame" x="240" y="699" width="66" height="22"/>
+                                <rect key="frame" x="257" y="699" width="66" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Login"/>
@@ -195,7 +195,7 @@
             <objects>
                 <viewController storyboardIdentifier="SellerDashboardViewController" id="1Sf-C9-XLu" customClass="SellerDashboardViewController" customModule="frontend" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LZY-w0-uPz">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="SellerInfo" translatesAutoresizingMaskIntoConstraints="NO" id="YGn-E3-yh0">
@@ -271,10 +271,10 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="AQj-YO-HTp">
-                                        <rect key="frame" x="0.0" y="50" width="361" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="50" width="361" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AQj-YO-HTp" id="cOr-0y-ZrF">
-                                            <rect key="frame" x="0.0" y="0.0" width="361" height="43.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="361" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -416,7 +416,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" placeholder="    Enter car description..." minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="LLt-R9-pDP">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" placeholder="    Enter car description..." minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="LLt-R9-pDP" userLabel="Enter car description...">
                                 <rect key="frame" x="16" y="591" width="344" height="63"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemGray6Color"/>
@@ -444,7 +444,7 @@
                     <navigationItem key="navigationItem" id="D7T-xS-lyD"/>
                     <connections>
                         <outlet property="brandTextField" destination="EEZ-SK-r2D" id="g8g-Bc-xGB"/>
-                        <outlet property="descriptionTextField" destination="LLt-R9-pDP" id="3bV-EU-nMx"/>
+                        <outlet property="descriptionTextField" destination="LLt-R9-pDP" id="Bix-Bn-Keu"/>
                         <outlet property="imageNameTextField" destination="UVZ-fi-ebW" id="8JN-37-Itm"/>
                         <outlet property="priceTextField" destination="aBl-AN-kbc" id="tII-H2-x85"/>
                         <outlet property="titleTextField" destination="lVF-xL-d29" id="DYm-7f-HeW"/>
@@ -455,7 +455,7 @@
             </objects>
             <point key="canvasLocation" x="2863.3587786259541" y="1775.3521126760563"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Seller Tab Bar Controller-->
         <scene sceneID="meA-Fe-m99">
             <objects>
                 <tabBarController storyboardIdentifier="SellerTabBarController" id="XGF-Vj-btZ" customClass="SellerTabBarController" customModule="frontend" customModuleProvider="target" sceneMemberID="viewController">
@@ -479,7 +479,7 @@
             <objects>
                 <viewController id="AlW-yH-j6W" customClass="LoginViewController" customModule="frontend" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ipc-X5-CIa">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="container" translatesAutoresizingMaskIntoConstraints="NO" id="Ygd-6F-3wX">
@@ -534,8 +534,12 @@
                                     <segue destination="V2O-OM-j6d" kind="show" identifier="loginToBuyerSide" id="gNe-wB-vSR"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="don-t-have-an-account" translatesAutoresizingMaskIntoConstraints="NO" id="u8O-Hf-CEQ">
+                                <rect key="frame" x="72" y="520" width="157" height="11"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CbO-cM-Z2b">
-                                <rect key="frame" x="224" y="507" width="84" height="20"/>
+                                <rect key="frame" x="227" y="515" width="84" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Sign Up">
@@ -545,10 +549,6 @@
                                     <segue destination="wyW-mb-t4E" kind="show" id="4LA-Wb-Fyb"/>
                                 </connections>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="don-t-have-an-account" translatesAutoresizingMaskIntoConstraints="NO" id="u8O-Hf-CEQ">
-                                <rect key="frame" x="76" y="512" width="157" height="11"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ri3-cy-GEr"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -568,7 +568,7 @@
             <objects>
                 <viewController storyboardIdentifier="BuyerProfileViewController" id="T1a-CG-V4N" customClass="BuyerProfileViewController" customModule="frontend" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6kD-cF-8cP">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="profileInfo" translatesAutoresizingMaskIntoConstraints="NO" id="dfa-hm-pDE">
@@ -598,12 +598,12 @@
             </objects>
             <point key="canvasLocation" x="3925.9541984732823" y="548.59154929577471"/>
         </scene>
-        <!--View Controller-->
+        <!--Buyer Browse View Controller-->
         <scene sceneID="3Jb-fC-1uf">
             <objects>
                 <viewController storyboardIdentifier="BuyerBrowseViewController" id="V2O-OM-j6d" customClass="BuyerBrowseViewController" customModule="frontend" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bb0-97-xQF">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Browse Cars" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qNE-PD-p60">
@@ -680,12 +680,12 @@
             </objects>
             <point key="canvasLocation" x="4854.1984732824421" y="-157.04225352112678"/>
         </scene>
-        <!--View Controller-->
+        <!--Car Detail View Controller-->
         <scene sceneID="TOD-TL-TB7">
             <objects>
                 <viewController storyboardIdentifier="CarDetailViewController" id="Afg-N4-WGZ" customClass="CarDetailViewController" customModule="frontend" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EtJ-Rf-dbH">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="car" translatesAutoresizingMaskIntoConstraints="NO" id="7Pf-G5-ROq">
@@ -723,7 +723,7 @@
             </objects>
             <point key="canvasLocation" x="5794.6564885496182" y="-157.04225352112678"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Buyer Tab Bar Controller-->
         <scene sceneID="XlK-AK-5hq">
             <objects>
                 <tabBarController storyboardIdentifier="BuyerTabBarController" id="htj-S6-po9" customClass="BuyerTabBarController" customModule="frontend" customModuleProvider="target" sceneMemberID="viewController">
@@ -748,7 +748,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="kOV-U7-SDA" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="SZr-jR-3IM">
-                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <rect key="frame" x="0.0" y="59" width="393" height="54"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -760,12 +760,12 @@
             </objects>
             <point key="canvasLocation" x="281.67938931297709" y="132.3943661971831"/>
         </scene>
-        <!--View Controller-->
+        <!--Confirm Purchase View Controller-->
         <scene sceneID="8gB-wn-m1M">
             <objects>
                 <viewController storyboardIdentifier="ConfirmPurchaseViewController" id="gSE-KM-TG9" customClass="ConfirmPurchaseViewController" customModule="frontend" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DFz-02-Bpb">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Confirm Purchase" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XCe-4X-IXN">
@@ -854,7 +854,7 @@
                     </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="dEo-QH-toB">
-                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <rect key="frame" x="0.0" y="16" width="393" height="54"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -873,7 +873,7 @@
                     <tabBarItem key="tabBarItem" title="Home" image="house" catalog="system" id="nro-q0-d2k"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="9UY-cM-3vp">
-                        <rect key="frame" x="0.0" y="118" width="393" height="44"/>
+                        <rect key="frame" x="0.0" y="16" width="393" height="54"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -929,10 +929,10 @@
             </objects>
             <point key="canvasLocation" x="3597.709923664122" y="1774.6478873239437"/>
         </scene>
-        <!--View Controller-->
+        <!--I-->
         <scene sceneID="fk9-po-JfS">
             <objects>
-                <viewController id="Nfh-Eq-Pbx" sceneMemberID="viewController">
+                <viewController id="Nfh-Eq-Pbx" customClass="I" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NCi-g4-HIB">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1079,11 +1079,11 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="J7r-UZ-x5o"/>
+        <segue reference="BLS-sc-Yna"/>
         <segue reference="Fnv-wF-awM"/>
-        <segue reference="rTx-2B-UbH"/>
+        <segue reference="I10-a0-ne4"/>
         <segue reference="gNe-wB-vSR"/>
-        <segue reference="xv4-03-4Jk"/>
+        <segue reference="IMD-7y-o51"/>
         <segue reference="4LA-Wb-Fyb"/>
     </inferredMetricsTieBreakers>
     <resources>
