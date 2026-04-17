@@ -18,6 +18,45 @@ class AddCarViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI()
+    }
+
+    private func configureUI() {
+        title = "Add Vehicle"
+        view.backgroundColor = AppTheme.background
+
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .close,
+            target: self,
+            action: #selector(closeTapped)
+        )
+
+        [titleTextField, brandTextField, yearTextField, priceTextField, imageNameTextField, descriptionTextField].forEach {
+            $0?.applyMarketplaceStyle()
+        }
+
+        titleTextField.applyMarketplaceStyle(placeholderText: "M5 Competition")
+        brandTextField.applyMarketplaceStyle(placeholderText: "BMW")
+        yearTextField.applyMarketplaceStyle(placeholderText: "2024")
+        priceTextField.applyMarketplaceStyle(placeholderText: "$78,500")
+        imageNameTextField.applyMarketplaceStyle(placeholderText: "Asset name or image URL")
+        descriptionTextField.applyMarketplaceStyle(placeholderText: "Tell buyers what makes this car special")
+
+        yearTextField.keyboardType = .numberPad
+        priceTextField.keyboardType = .numbersAndPunctuation
+        imageNameTextField.autocapitalizationType = .none
+
+        view.subviews.compactMap { $0 as? UIButton }.forEach { button in
+            button.applyPrimaryStyle(title: button.currentTitle)
+        }
+    }
+
+    @objc private func closeTapped() {
+        if navigationController?.viewControllers.first == self {
+            dismiss(animated: true)
+        } else {
+            navigationController?.popViewController(animated: true)
+        }
     }
 
     @IBAction func saveButtonTapped(_ sender: UIButton) {
@@ -29,7 +68,7 @@ class AddCarViewController: UIViewController {
         let description = descriptionTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
 
         if title.isEmpty || brand.isEmpty || year.isEmpty || price.isEmpty || description.isEmpty {
-            showAlert(title: "Missing Info", message: "Please fill in all required fields.")
+            showBasicAlert(title: "Missing Info", message: "Please fill in all required fields.")
             return
         }
 
@@ -39,22 +78,19 @@ class AddCarViewController: UIViewController {
             title: title,
             brand: brand,
             year: year,
-            price: price,
+            price: price.hasPrefix("$") ? price : "$\(price)",
             carDescription: description,
             imageName: finalImageName
         )
 
         NotificationCenter.default.post(name: NSNotification.Name("carSaved"), object: nil)
-
-        print("Saving car: \(title), \(brand), \(year), \(price), image: \(finalImageName)")
-
         showSuccessAndGoBack()
     }
 
     func showSuccessAndGoBack() {
         let alert = UIAlertController(
-            title: "Success",
-            message: "Car saved successfully.",
+            title: "Listing Published",
+            message: "Your car is now live on the marketplace.",
             preferredStyle: .alert
         )
 
@@ -62,17 +98,6 @@ class AddCarViewController: UIViewController {
             self.navigationController?.popViewController(animated: true)
         }))
 
-        present(alert, animated: true)
-    }
-
-    func showAlert(title: String, message: String) {
-        let alert = UIAlertController(
-            title: title,
-            message: message,
-            preferredStyle: .alert
-        )
-
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
     }
 }

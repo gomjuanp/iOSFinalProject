@@ -193,7 +193,7 @@
         <!--Profile-->
         <scene sceneID="qhi-lo-wr8">
             <objects>
-                <viewController id="1Sf-C9-XLu" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SellerDashboardViewController" id="1Sf-C9-XLu" customClass="SellerDashboardViewController" customModule="frontend" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LZY-w0-uPz">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -237,7 +237,7 @@
         <!--My Listings View Controller-->
         <scene sceneID="FUB-Uy-6Hs">
             <objects>
-                <viewController id="jkN-QH-yrr" customClass="MyListingsViewController" customModule="frontend" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MyListingsViewController" id="jkN-QH-yrr" customClass="MyListingsViewController" customModule="frontend" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Dhh-TY-sJr">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -302,7 +302,7 @@
         <!--Add Car View Controller-->
         <scene sceneID="wUT-EK-3mp">
             <objects>
-                <viewController id="2Uj-tg-Qx9" customClass="AddCarViewController" customModule="frontend" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddCarViewController" id="2Uj-tg-Qx9" customClass="AddCarViewController" customModule="frontend" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fkO-pa-gQf">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -458,7 +458,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="meA-Fe-m99">
             <objects>
-                <tabBarController id="XGF-Vj-btZ" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="SellerTabBarController" id="XGF-Vj-btZ" customClass="SellerTabBarController" customModule="frontend" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="5ht-Yf-xlr"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="E7K-cd-Y0S">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
@@ -566,7 +566,7 @@
         <!--Profile-->
         <scene sceneID="L90-wU-RU2">
             <objects>
-                <viewController id="T1a-CG-V4N" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BuyerProfileViewController" id="T1a-CG-V4N" customClass="BuyerProfileViewController" customModule="frontend" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6kD-cF-8cP">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -601,7 +601,7 @@
         <!--View Controller-->
         <scene sceneID="3Jb-fC-1uf">
             <objects>
-                <viewController id="V2O-OM-j6d" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BuyerBrowseViewController" id="V2O-OM-j6d" customClass="BuyerBrowseViewController" customModule="frontend" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bb0-97-xQF">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -683,7 +683,7 @@
         <!--View Controller-->
         <scene sceneID="TOD-TL-TB7">
             <objects>
-                <viewController id="Afg-N4-WGZ" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CarDetailViewController" id="Afg-N4-WGZ" customClass="CarDetailViewController" customModule="frontend" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EtJ-Rf-dbH">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -726,7 +726,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="XlK-AK-5hq">
             <objects>
-                <tabBarController id="htj-S6-po9" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="BuyerTabBarController" id="htj-S6-po9" customClass="BuyerTabBarController" customModule="frontend" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="NdC-wp-Ots"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="YEX-lu-4ti">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
@@ -763,7 +763,7 @@
         <!--View Controller-->
         <scene sceneID="8gB-wn-m1M">
             <objects>
-                <viewController id="gSE-KM-TG9" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ConfirmPurchaseViewController" id="gSE-KM-TG9" customClass="ConfirmPurchaseViewController" customModule="frontend" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DFz-02-Bpb">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -809,7 +809,7 @@
         <!--View Controller-->
         <scene sceneID="99m-tA-qnD">
             <objects>
-                <viewController id="1YB-Um-J8d" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PurchaseSuccessViewController" id="1YB-Um-J8d" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="UN7-AH-8sv">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

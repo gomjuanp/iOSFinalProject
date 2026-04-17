@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+
 class CoreDataManager {
 
     static let shared = CoreDataManager()
@@ -36,20 +37,43 @@ class CoreDataManager {
         newCar.imageName = imageName
         newCar.isSold = false
         newCar.createdAt = Date()
+        newCar.setValue(SessionManager.shared.currentUserEmail ?? "", forKey: "sellerEmail")
+        newCar.setValue(nil, forKey: "buyerEmail")
 
-        do {
-            try context.save()
-            print("Car saved successfully")
-        } catch {
-            print("Failed to save car: \(error.localizedDescription)")
-        }
+        saveContextWithLogging(successMessage: "Car saved successfully")
     }
 
-    func fetchCars() -> [Car] {
+    func fetchCars(
+        searchText: String? = nil,
+        availableOnly: Bool = false,
+        sellerOnly: Bool = false
+    ) -> [Car] {
         let request: NSFetchRequest<Car> = Car.fetchRequest()
+        var predicates: [NSPredicate] = []
 
-        let sort = NSSortDescriptor(key: "createdAt", ascending: false)
-        request.sortDescriptors = [sort]
+        if availableOnly {
+            predicates.append(NSPredicate(format: "isSold == NO"))
+        }
+
+        if sellerOnly, let email = SessionManager.shared.currentUserEmail, !email.isEmpty {
+            predicates.append(NSPredicate(format: "sellerEmail == %@", email))
+        }
+
+        if let searchText, !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            let term = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+            predicates.append(
+                NSPredicate(
+                    format: "title CONTAINS[cd] %@ OR brand CONTAINS[cd] %@ OR year CONTAINS[cd] %@ OR price CONTAINS[cd] %@",
+                    term, term, term, term
+                )
+            )
+        }
+
+        if !predicates.isEmpty {
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+        }
+
+        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
 
         do {
             return try context.fetch(request)
@@ -58,6 +82,62 @@ class CoreDataManager {
             return []
         }
     }
+
+    func fetchPurchasedCarsForCurrentBuyer() -> [Car] {
+        let request: NSFetchRequest<Car> = Car.fetchRequest()
+        if let email = SessionManager.shared.currentUserEmail, !email.isEmpty {
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
+                NSPredicate(format: "isSold == YES"),
+                NSPredicate(format: "buyerEmail == %@", email)
+            ])
+        } else {
+            request.predicate = NSPredicate(format: "isSold == YES")
+        }
+        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
+
+        do {
+            return try context.fetch(request)
+        } catch {
+            print("Failed to fetch purchased cars: \(error.localizedDescription)")
+            return []
+        }
+    }
+
+    func purchase(car: Car) -> Bool {
+        context.refresh(car, mergeChanges: true)
+
+        guard !car.isSold else {
+            return false
+        }
+
+        car.isSold = true
+        car.setValue(SessionManager.shared.currentUserEmail ?? "", forKey: "buyerEmail")
+        saveContextWithLogging(successMessage: "Car purchased successfully")
+        return true
+    }
+
+    func deleteCar(_ car: Car) {
+        context.delete(car)
+        saveContextWithLogging(successMessage: "Car deleted successfully")
+    }
+
+    func toggleSoldStatus(for car: Car) {
+        car.isSold.toggle()
+        if car.isSold == false {
+            car.setValue(nil, forKey: "buyerEmail")
+        }
+        saveContextWithLogging(successMessage: "Car status updated")
+    }
+
+    func sellerDashboardStats() -> (total: Int, active: Int, sold: Int) {
+        let sellerCars = fetchCars(sellerOnly: true)
+        let dataSet = sellerCars.isEmpty ? fetchCars() : sellerCars
+        let total = dataSet.count
+        let sold = dataSet.filter { $0.isSold }.count
+        let active = total - sold
+        return (total, active, sold)
+    }
+
     func saveUser(name: String, email: String, password: String, accountType: String) {
         let newUser = User(context: context)
         newUser.id = UUID()
@@ -66,12 +146,7 @@ class CoreDataManager {
         newUser.password = password
         newUser.accountType = accountType
 
-        do {
-            try context.save()
-            print("User saved successfully")
-        } catch {
-            print("Failed to save user: \(error.localizedDescription)")
-        }
+        saveContextWithLogging(successMessage: "User saved successfully")
     }
 
     func userExists(email: String) -> Bool {
@@ -99,4 +174,13 @@ class CoreDataManager {
             return nil
         }
     }
+
+    private func saveContextWithLogging(successMessage: String) {
+        do {
+            try context.save()
+            print(successMessage)
+        } catch {
+            print("Failed to save context: \(error.localizedDescription)")
+        }
     }
+}

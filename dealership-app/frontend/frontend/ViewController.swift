@@ -6,17 +6,39 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
+
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var accountTypeButton: UIButton!
-    
+
     var selectedAccountType = "Buyer"
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI()
+        configureAccountTypeMenu()
+    }
 
+    private func configureUI() {
+        view.backgroundColor = AppTheme.background
+        nameTextField.applyMarketplaceStyle(placeholderText: "Your full name")
+        emailTextField.applyMarketplaceStyle(placeholderText: "name@email.com")
+        passwordTextField.applyMarketplaceStyle(placeholderText: "Enter a password")
+        passwordTextField.isSecureTextEntry = true
+        passwordTextField.autocapitalizationType = .none
+        emailTextField.keyboardType = .emailAddress
+        emailTextField.autocapitalizationType = .none
+
+        accountTypeButton.applySecondaryStyle(title: "Buyer")
+        view.subviews.compactMap { $0 as? UIButton }.forEach { button in
+            if button != accountTypeButton {
+                button.applyPrimaryStyle()
+            }
+        }
+    }
+
+    private func configureAccountTypeMenu() {
         accountTypeButton.setTitle("Buyer", for: .normal)
 
         let buyer = UIAction(title: "Buyer") { _ in
@@ -29,7 +51,7 @@ class ViewController: UIViewController {
             self.accountTypeButton.setTitle("Seller", for: .normal)
         }
 
-        accountTypeButton.menu = UIMenu(title: "", children: [buyer, seller])
+        accountTypeButton.menu = UIMenu(title: "Choose account type", children: [buyer, seller])
         accountTypeButton.showsMenuAsPrimaryAction = true
     }
 
@@ -39,12 +61,12 @@ class ViewController: UIViewController {
         let password = passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
 
         if name.isEmpty || email.isEmpty || password.isEmpty {
-            showAlert(title: "Missing Info", message: "Please fill in all fields.")
+            showBasicAlert(title: "Missing Info", message: "Please fill in all fields.")
             return
         }
 
         if CoreDataManager.shared.userExists(email: email) {
-            showAlert(title: "User Exists", message: "An account with this email already exists.")
+            showBasicAlert(title: "User Exists", message: "An account with this email already exists.")
             return
         }
 
@@ -55,16 +77,8 @@ class ViewController: UIViewController {
             accountType: selectedAccountType
         )
 
-        if selectedAccountType == "Seller" {
-            performSegue(withIdentifier: "goToSellerSide", sender: nil)
-        } else {
-            performSegue(withIdentifier: "goToBuyerSide", sender: nil)
-        }
-    }
+        SessionManager.shared.saveSession(name: name, email: email, accountType: selectedAccountType)
 
-    func showAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true)
+        presentMarketplaceArea(for: selectedAccountType)
     }
 }

@@ -6,8 +6,10 @@
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="imageName" optional="YES" attributeType="String"/>
+        <attribute name="buyerEmail" optional="YES" attributeType="String"/>
         <attribute name="isSold" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="price" optional="YES" attributeType="String"/>
+        <attribute name="sellerEmail" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="year" optional="YES" attributeType="String"/>
     </entity>

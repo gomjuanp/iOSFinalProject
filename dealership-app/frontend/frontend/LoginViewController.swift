@@ -14,6 +14,21 @@ class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI()
+    }
+
+    private func configureUI() {
+        view.backgroundColor = AppTheme.background
+        emailTextField.applyMarketplaceStyle(placeholderText: "name@email.com")
+        passwordTextField.applyMarketplaceStyle(placeholderText: "Enter password")
+        emailTextField.keyboardType = .emailAddress
+        emailTextField.autocapitalizationType = .none
+        passwordTextField.isSecureTextEntry = true
+        passwordTextField.autocapitalizationType = .none
+
+        view.subviews.compactMap { $0 as? UIButton }.forEach { button in
+            button.applyPrimaryStyle()
+        }
     }
 
     @IBAction func loginButtonTapped(_ sender: UIButton) {
@@ -21,24 +36,20 @@ class LoginViewController: UIViewController {
         let password = passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
 
         if email.isEmpty || password.isEmpty {
-            showAlert(title: "Missing Info", message: "Please enter email and password.")
+            showBasicAlert(title: "Missing Info", message: "Please enter email and password.")
             return
         }
 
         if let user = CoreDataManager.shared.loginUser(email: email, password: password) {
-            if user.accountType == "Seller" {
-                performSegue(withIdentifier: "loginToSellerSide", sender: nil)
-            } else {
-                performSegue(withIdentifier: "loginToBuyerSide", sender: nil)
-            }
-        } else {
-            showAlert(title: "Login Failed", message: "Invalid email or password.")
-        }
-    }
+            SessionManager.shared.saveSession(
+                name: user.name ?? "User",
+                email: user.email ?? email,
+                accountType: user.accountType ?? "Buyer"
+            )
 
-    func showAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true)
+            presentMarketplaceArea(for: user.accountType ?? "Buyer")
+        } else {
+            showBasicAlert(title: "Login Failed", message: "Invalid email or password.")
+        }
     }
 }

@@ -38,6 +38,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "DealershipDataModel")
+
+        container.persistentStoreDescriptions.forEach { description in
+            description.shouldMigrateStoreAutomatically = true
+            description.shouldInferMappingModelAutomatically = true
+        }
+
         container.loadPersistentStores { storeDescription, error in
             if let error = error as NSError? {
                 fatalError("Could not load Core Data store: \(error), \(error.userInfo)")
