@@ -58,4 +58,45 @@ class CoreDataManager {
             return []
         }
     }
+    func saveUser(name: String, email: String, password: String, accountType: String) {
+        let newUser = User(context: context)
+        newUser.id = UUID()
+        newUser.name = name
+        newUser.email = email
+        newUser.password = password
+        newUser.accountType = accountType
+
+        do {
+            try context.save()
+            print("User saved successfully")
+        } catch {
+            print("Failed to save user: \(error.localizedDescription)")
+        }
+    }
+
+    func userExists(email: String) -> Bool {
+        let request: NSFetchRequest<User> = User.fetchRequest()
+        request.predicate = NSPredicate(format: "email == %@", email)
+
+        do {
+            let users = try context.fetch(request)
+            return !users.isEmpty
+        } catch {
+            print("Failed to check user: \(error.localizedDescription)")
+            return false
+        }
+    }
+
+    func loginUser(email: String, password: String) -> User? {
+        let request: NSFetchRequest<User> = User.fetchRequest()
+        request.predicate = NSPredicate(format: "email == %@ AND password == %@", email, password)
+
+        do {
+            let users = try context.fetch(request)
+            return users.first
+        } catch {
+            print("Login failed: \(error.localizedDescription)")
+            return nil
+        }
+    }
     }
